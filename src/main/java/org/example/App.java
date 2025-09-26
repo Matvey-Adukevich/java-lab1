@@ -4,6 +4,18 @@ import java.util.Scanner;
 
 public class App 
 {
+
+    public static boolean Inside(int elx, int ely, int x, int y){
+        if((0<=elx) & (elx<=x) & (0<=ely) & (ely<=y)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
     public static int Square(int[][] array){
         int ny = array.length;
         int max_x = array[0][0];
@@ -40,6 +52,10 @@ public class App
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите кол-во монстров: ");
         int n = scanner.nextInt();
+        System.out.print("Введите размер поля: ");
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        System.out.println("Введите координаты монстров: ");
         int[][] arr = new int[n][2];
         for(int i = 0; i<n; i++){
 
@@ -52,16 +68,20 @@ public class App
         }
 
 
-        int minn = 1000;
+        int minn = x*y;
         for(int i = 0; i<n; i++){
             for(int j = 0; j<2; j++){
                 int[][] arr2 = arr.clone();
                 arr2[i][j] += 1;
-                int k = Square(arr2);
+                if(Inside(arr2[i][0], arr2[i][1], x, y)){
+                    int k = Square(arr2);
+                    minn = Math.min(k,minn);
+                }
                 arr2[i][j] -= 2;
-                int m = Square(arr2);
-                minn = Math.min(k,minn);
-                minn = Math.min(m, minn);
+                if(Inside(arr2[i][0], arr2[i][1], x, y)) {
+                    int m = Square(arr2);
+                    minn = Math.min(m, minn);
+                }
             }
         }
         System.out.print(minn);
